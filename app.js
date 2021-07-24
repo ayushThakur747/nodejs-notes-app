@@ -1,5 +1,5 @@
 const yargs = require('yargs');
-const {getNotes,addNotes,removedNotes,listNotes,readNote} = require('./notes');
+const {addNote,removeNote,listNotes,readNote} = require('./notes');
 //customizing yargs version
 yargs.version('1.1.0');
 //create add command
@@ -22,46 +22,42 @@ yargs.command({//done
     },
     handler: function(argv){//what to do after builder
         
-        addNotes(argv.title,argv.body);
+        addNote(argv.title,argv.body);
     }
 })
 
-yargs.command({//some err
-    command:"delete",
-    describe:"delete note",
+yargs.command({//done
+    command:"remove",
+    describe:"remove a note",
     builder:{
-        title:"note title",
-        demandOption:true,
-        type:"string"
-    },  
-    handler: function(argv){
-        console.log("here",argv)
-        //removedNotes(argv.title);
+        title:{//its a obj remember
+            describe:"Note title to Delete",
+            demandOption:true,
+            type:"string"
+        }
+    },
+    handler:function(argv){
+        removeNote(argv.title);
     }
 })
 
 yargs.command({//done
     command:"list",
     describe:"list notes",
-
-    handler: function(){
-        
+    handler: function(){      
         listNotes();
     }
 })
-yargs.command({//some err
-    command:"read",
-    describe:"read a note",
+yargs.command({//done
+    command:'read',
+    describe:'read a note',
     builder:{
-        title:"note title",
+        title:{ describe:'find a note',
         demandOption:true,
-        type:"string"
-    },  
-    handler: function(argv){
-        //console.log("here:",argv.title);
-        readNote(argv.title);
+        type:'string',}
+    },
+    handler:function(argv){
+       readNote(argv.title);
     }
 })
 
-
-console.log(yargs.argv);
