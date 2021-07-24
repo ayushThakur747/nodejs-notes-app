@@ -1,36 +1,33 @@
 const yargs = require('yargs');
 const {addNote,removeNote,listNotes,readNote} = require('./notes');
-//customizing yargs version
-yargs.version('1.1.0');
-//create add command
 
-yargs.command({//done
+yargs.version('1.1.0');
+yargs.command({
     command: 'add',
     describe: 'Add a new note',
-    builder:{//what to do as this command fires
-        title:{//1st args
+    builder:{
+        title:{
             describe:"Note title",
             demandOption: true,
             type: 'string'
         },
-        body:{//2nd args
+        body:{
             describe: "Note body",
             demandOption:true,
             type:'string'
         }
 
     },
-    handler: function(argv){//what to do after builder
-        
+    handler: function(argv){
         addNote(argv.title,argv.body);
     }
 })
 
-yargs.command({//done
+yargs.command({
     command:"remove",
     describe:"remove a note",
     builder:{
-        title:{//its a obj remember
+        title:{
             describe:"Note title to Delete",
             demandOption:true,
             type:"string"
@@ -41,14 +38,14 @@ yargs.command({//done
     }
 })
 
-yargs.command({//done
+yargs.command({
     command:"list",
     describe:"list notes",
     handler: function(){      
         listNotes();
     }
 })
-yargs.command({//done
+yargs.command({
     command:'read',
     describe:'read a note',
     builder:{
@@ -61,3 +58,4 @@ yargs.command({//done
     }
 })
 
+yargs.parse();
